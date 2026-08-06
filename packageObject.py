@@ -11,6 +11,9 @@ class Package:
         self.weight = weight
         self.status = status
 
+    def get_id(self):
+        return self.package_id
+
     def print_info(self):
         print("ID: " +str(self.package_id))
         print("Address: " + self.address)
