@@ -1,8 +1,8 @@
 # Package Object
 
 class Package:
-    def __init__(self, package_id, address, city, state, zipcode, deadline, weight, status):
-        self.package_id: int = package_id
+    def __init__(self, id, address, city, state, zipcode, deadline, weight, status):
+        self.id: int = id
         self.address = address
         self.city = city
         self.state = state
@@ -12,13 +12,13 @@ class Package:
         self.status = status
 
     def get_id(self):
-        return self.package_id
+        return self.id
 
     def get_status(self):
         return self.status
 
     def print_info(self):
-        print("ID: " +str(self.package_id))
+        print("ID: " +str(self.id))
         print("Address: " + self.address)
         print("City: " + self.city)
         print("State: " + self.state)
@@ -28,11 +28,10 @@ class Package:
         print("Status: " + self.status)
         print("********************************")
 
-
-    def print_info_by_id(self, package_id):
-        package = package_id
-        if package is not None:
-            package.print_info()
+## might need work?
+    def print_info_by_id(self, id):
+        if id is not None:
+            self.print_info()
 
 # delivery ID
 # delivery address
