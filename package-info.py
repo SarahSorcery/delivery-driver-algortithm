@@ -81,23 +81,21 @@ def print_hash_table():
 print_hash_table()
 
 ###################################################################################################
-
-distance_table = []
-
 def get_distance_info(distance_file_path):
+    distance_table = []
     with open(distance_file_path) as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
-
         for line in reader:
             address_distance = []
             for data in line:
                 address_distance.append(data)
             distance_table.append(address_distance)
+    return distance_table
 
-get_distance_info("WGUPS-distance-table.csv")
-########
+package_distance_table = get_distance_info("WGUPS-distance-table.csv")
+###################################################################################################
 location_distance_values = []
-for location in distance_table:
+for location in package_distance_table:
     distance_values = location[1:] # take only number values after addresses
     location_distance_values.append(distance_values) # this is more efficient than a 2d for loop, which I initially had here, which created a list of values from location 2-end, but this is way better
 
@@ -105,14 +103,14 @@ for i in location_distance_values:
     print(i)
     print("********************************")
 
-################################
+###################################################################################################
 def print_statuses():
     for bucket in hash_list:
         for package in bucket:
             if Pack.get_status(package) != "":
                 print(str(Pack.get_id(package)) + "  |  " + Pack.get_status(package))
 print_statuses()
-################################
+###################################################################################################
 
 # selected_id = input("Enter which package ID: " )
 
