@@ -26,33 +26,22 @@ class PackageReader:
         with open("WGUPS-package-file.csv") as csvfile:
              reader = csv.reader(csvfile, delimiter=',', quotechar='"')
              for line in reader:
-                 package_id, address, city, state, zipcode, deadline, weight, status = line
-                 package = Package(package_id, address, city, state, zipcode, deadline, weight, status)
+                package_id, address, city, state, zipcode, deadline, weight, status = line
+                package_id = int(package_id)
+                current_package = Package(package_id, address, city, state, zipcode, deadline, weight, status)
                 # insert package into packages set
-                self.insert(package)
+                self.insert(current_package)
                 # add to hashMap
-                self.package_hash_table.add(package_id)
+                self.package_hash_table.add(package_id, current_package)
 
+
+
+packageReader = PackageReader()
 
 
 ## officially overwhelmed myself, taking a break. So far I think I got a somewhat better functioning hashmap/table
 ## I'm not sure what I need to do exactly. successfully read package info into the hash again. Then actually lookup single values to print
 ## then read in distance table/ adjacency matrix for further use in shortest path.
-
-# ###################################################################################################
-# def get_package_info(package_file_path):
-#     loading_list = []
-#     with open(package_file_path) as csvfile:
-#         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
-#         for line in reader:
-#             package_id, address, city, state, zipcode, deadline, weight, status = line
-#             loading_list.append(Package(package_id, address, city, state, zipcode, deadline, weight, status))
-#     return loading_list
-#
-# # populate list of packages from source CSV file
-# package_list = get_package_info("WGUPS-package-file.csv")
-#
-# ###################################################################################################
 # ###################################################################################################
 # def get_distance_info(distance_file_path):
 #     distance_table = []
