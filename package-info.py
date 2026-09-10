@@ -1,5 +1,5 @@
 import csv
-import packageObject as pkg
+import Package as pkg
 Pack = pkg.Package
 
 def get_package_info(package_file_path):
