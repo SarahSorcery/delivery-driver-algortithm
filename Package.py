@@ -1,3 +1,4 @@
+from UI import UI
 # Package Object
 
 class Package:
@@ -18,14 +19,14 @@ class Package:
         return self.status
 
     def print_info(self):
-        print("ID: " +str(self.id))
-        print("Address: " + self.address)
+        print(UI.head + "ID: " +str(self.id))
+        print(UI.green + "Address: " + self.address)
         print("City: " + self.city)
         print("State: " + self.state)
         print("Zipcode: " + self.zipcode)
         print("Deadline: " + str(self.deadline))
         print("Weight: " + self.weight)
-        print("Status: " + self.status)
+        print("Status: " + self.status + UI.reset)
         print("********************************")
 
 ## might need work?

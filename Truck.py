@@ -1,14 +1,17 @@
 
 class Truck:
-    def __init__(self, id, driver, weight, location): #, distance):
+    def __init__(self, id, driver, weight, location, packages): #, distance):
         self.id: int = id
         self.driver = driver
         self.weight: float = weight
         self.location = location
+        self.packages = packages
         # needs any other required information
         # self.MAX_PKGS = 16
         # self.AVG_MPH = 18
 
+
+    # trucks need a set of packages loaded into them
 
 
     # MAX_PKGS = 16

@@ -1,15 +1,14 @@
 import csv
-import Package as pkg
-Pack = pkg.Package
-
+from Package import Package
+import Truck as truck
+###################################################################################################
 def get_package_info(package_file_path):
     loading_list = []
     with open(package_file_path) as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
-
         for line in reader:
             package_id, address, city, state, zipcode, deadline, weight, status = line
-            loading_list.append(pkg.Package(package_id, address, city, state, zipcode, deadline, weight, status))
+            loading_list.append(Package(package_id, address, city, state, zipcode, deadline, weight, status))
     return loading_list
 
 # populate list of packages from source CSV file
@@ -17,9 +16,7 @@ package_list = get_package_info("WGUPS-package-file.csv")
 
 ###################################################################################################
 # assigning package_list items to hash table
-###################
 
-# TESTING A HASH TABLE IMPLEMENTATION
 hash_list = [
     [],[],[],[],[],[],[],[],[],[]
 ]
@@ -45,7 +42,7 @@ def contains(value):
     index = hash_function(value)
     bucket = hash_list[index]
     for drop in bucket:
-        if value == Pack.get_id(drop):
+        if value == Package.get_id(drop):
             return True
         else:
             return False
@@ -76,7 +73,7 @@ def print_hash_table():
     for bucket in hash_list:
         for item in bucket:
             print(item)
-            Pack.print_info(item)
+            Package.print_info(item)
 
 print_hash_table()
 
@@ -107,8 +104,8 @@ for i in location_distance_values:
 def print_statuses():
     for bucket in hash_list:
         for package in bucket:
-            if Pack.get_status(package) != "":
-                print(str(Pack.get_id(package)) + "  |  " + Pack.get_status(package))
+            if Package.get_status(package) != "":
+                print(str(Package.get_id(package)) + "  |  " + Package.get_status(package))
 print_statuses()
 ###################################################################################################
 
@@ -137,3 +134,22 @@ print_statuses()
 # def update_hash(package, hash_list):
 #     index = hash_function(int(package.get_id()))
 #     hash_list[index].append(package)
+
+
+
+# trying to load a truck
+
+truck_1 = truck
+truck_2 = truck
+
+
+def print_value(key):
+    index = hash_function(key)
+    bucket = hash_list[index]
+    for drop in bucket:
+        if index == Package.get_id(drop):
+            print(drop)
+        else:
+            print("oof")
+
+print_value(33)
