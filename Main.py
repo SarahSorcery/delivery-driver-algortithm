@@ -1,4 +1,4 @@
-
+from UI import UI
 
 ## Right now I will have the "main" ui here for checking packages & statuses
 
@@ -8,33 +8,36 @@
 # display total milage of all trucks
 
 def RunSimulation():
-    print("Please choose an option from below by entering the specific key value: ")
-    print("Display Package Status: s ")
-    print("Display Truck Route Progress: t ")
-    print("Display Truck Mileage Totals: m ")
-    option = input(" ")
+    print(UI.head + "Please choose an option from below by entering the specific key value: ")
+    print(UI.blue + "Display Package Status: " + UI.yellow + "s ")
+    print(UI.blue + "Display Truck Route Progress: " + UI.yellow + "t ")
+    print(UI.blue + "Display Truck Mileage Totals: " + UI.yellow + "m ")
+    option = input(UI.yellow)
 
     match option:
         case 's':
-            print("PACKAGE STATUS")
+            print(UI.head + "PACKAGE STATUS" + UI.reset)
         case 't':
-            print("ROUTE PROGRESS")
+            print(UI.head + "ROUTE PROGRESS" + UI.reset)
         case 'm':
-            print("TOTAL MILEAGE")
+            print(UI.head + "TOTAL MILEAGE" + UI.reset)
 
-    option = input("Enter 'b' to go back: ")
+    print(UI.blue + "Back to Menu: " + UI.yellow + "b ")
+    print(UI.blue + "Quit Simulation: " + UI.yellow + "ANY ")
+    option = input(UI.yellow)
     if option == 'b':
         RunSimulation()
     else:
-        print("Ending Simulation")
+        print(UI.red + "Ending Simulation")
+        print("GOODBYE" + UI.reset)
 
 
 
-start = input("Greetings, initiate Delivery Driver Simulation?  y/n:  ")
+start = input(UI.green + "Greetings, initiate Delivery Driver Simulation?  y/n:  " + UI.yellow)
 
 if start == 'y' or start =='Y':
     # run simulation
-    print("start")
+    print(UI.green + "STARTING SIMULATION" + UI.reset)
     RunSimulation()
 else:
-    print("Goodbye")
+    print(UI.red + "GOODBYE" + UI.reset)
