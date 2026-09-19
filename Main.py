@@ -24,14 +24,14 @@ def RunSimulation():
 
     print(UI.blue + "Back to Menu: " + UI.yellow + "b ")
     print(UI.blue + "Quit Simulation: " + UI.yellow + "ANY ")
+
     option = input(UI.yellow)
+
     if option == 'b':
         RunSimulation()
     else:
         print(UI.red + "Ending Simulation")
         print("GOODBYE" + UI.reset)
-
-
 
 start = input(UI.green + "Greetings, initiate Delivery Driver Simulation?  y/n:  " + UI.yellow)
 
