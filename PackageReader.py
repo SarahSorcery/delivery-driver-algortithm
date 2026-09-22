@@ -35,7 +35,7 @@ class PackageReader:
                 self.insert(current_package)
                 # add to hashMap
                 self.package_hash_table.add(package_id, current_package)
-                print(package_id, current_package)
+                #print(package_id, current_package)
 
     def get_package_by_id(self, id):
         return self.package_hash_table.get(id) #uses hashmap's get() to get id
