@@ -3,7 +3,7 @@ from UI import UI
 
 class Package:
     def __init__(self, id, address, city, state, zipcode, deadline, weight, status):
-        self.id: int = id
+        self.id = id
         self.address = address
         self.city = city
         self.state = state
@@ -12,33 +12,37 @@ class Package:
         self.weight = weight
         self.status = status
 
+    def __str__(self):
+            return f"{self.id}, {self.address}, {self.deadline}, {self.status}"
+
     def get_id(self):
         return self.id
 
     def get_status(self):
         return self.status
 
-    def print_info(self):
-        print(UI.head + "ID: " +str(self.id))
-        print(UI.green + "Address: " + self.address)
-        print("City: " + self.city)
-        print("State: " + self.state)
-        print("Zipcode: " + self.zipcode)
-        print("Deadline: " + str(self.deadline))
-        print("Weight: " + self.weight)
-        print("Status: " + self.status + UI.reset)
-        print("********************************")
+    def set_status(self, status):
+        self.status = status
 
-## might need work?
-    def print_info_by_id(self, id):
-        if id is not None:
-            self.print_info()
+    def update(self, new_address, new_city, new_zipcode, new_deadline, new_status):
+        self.address = new_address
+        self.city = new_city
+        self.zipcode = new_zipcode
+        self.deadline = new_deadline
+        self.status = new_status
 
-# delivery ID
-# delivery address
-# delivery deadline
-# delivery city
-# delivery state
-# delivery zip code
-# package weight
-# delivery status
+#     def print_info(self):
+#         print(UI.head + "ID: " +str(self.id))
+#         print(UI.green + "Address: " + self.address)
+#         print("City: " + self.city)
+#         print("State: " + self.state)
+#         print("Zipcode: " + self.zipcode)
+#         print("Deadline: " + str(self.deadline))
+#         print("Weight: " + self.weight)
+#         print("Status: " + self.status + UI.reset)
+#         print("********************************")
+
+# ## might need work?
+#     def print_info_by_id(self, id):
+#         if id is not None:
+#             self.print_info()

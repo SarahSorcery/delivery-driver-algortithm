@@ -7,12 +7,12 @@ class HashMap:
         self.length = 0
 
         # assigning package_list items to hash table
-        hash_list = [
-            [], [], [], [], [], [], [], [], [], []
-        ]
+        # hash_list = [
+        #     [], [], [], [], [], [], [], [], [], []
+        # ]
 
     def hash_function(self, item):
-        return item % self.size
+        return int(item) % self.size
 
     # def add(self, value):
     #     index = hash_function(value)
@@ -26,7 +26,7 @@ class HashMap:
 
         # If the key doesn't exist in the map yet, add it
         if self.map[index] is None:
-            self.map[index] = [[key, val]]
+            self.map[index] = [value]
             self.length += 1
             return True
 
@@ -35,21 +35,33 @@ class HashMap:
             if pair[0] == key:
                 pair[1] = value
                 return True
-            # otherwise append to list
+            # otherwise append to bucket list
         self.map[index].append(value)
         self.length += 1
         return True
 
+
+
+    ### not sure if the below works as of now
+
     ## FIX ALL BELOW, not using "hash_list" anymore, using self.map which is a list
-    def contains(self, value):
-        index = self.hash_function(value)
-        bucket = self.map[index]
-        for drop in bucket:
-            if value == Package.get_id(drop):
-                return True
-            else:
-                return False
+    def get(self, key):
+        index = self.hash_function(key)
+        if self.map[index] is not None:
+            for pair in self.map[index]:
+                if pair[0] == key:
+                    return pair[1]
+        # return None if key value pair doesn't exist
         return None
+
+
+        # bucket = self.map[index]
+        # for drop in bucket:
+        #     if value == Package.get_id(drop):
+        #         return True
+        #     else:
+        #         return False
+        # return None
 
     def delete(self, value):
         index = self.hash_function(value)
