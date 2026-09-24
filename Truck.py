@@ -36,13 +36,14 @@ class Truck:
             print(f"[DEBUG ALERT] Truck #{self.id} was handed a 'None' package! Skipping to prevent crash.")
             return
         self.package_list.append(package)
-        self.packages.add(package.id, package) # add package to HashMap --> O(1)
+        #self.packages.add(package.id, package) # add package to HashMap --> O(1)
         self.pkg_count += 1
 
     # removes a package from Truck
     # Time Complexity is O(3) --> O(1)
     # Space Complexity is O(1)
     def remove_package(self, package):
-        self.packages.delete(package.id, package) # remove package to HashMap --> O(1)
+        self.package_list.remove(package)
+        #self.packages.delete(package.id, package) # remove package to HashMap --> O(1)
         self.pkg_count -= 1 # decrement
 
