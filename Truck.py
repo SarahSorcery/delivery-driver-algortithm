@@ -1,22 +1,18 @@
-# Sam Merrill ID #
+# Sam Merrill ID: 012638734
 
-# useful infor for late:     
+# useful info for later:     
     # start_time = 8:00 am
     # AVAILABLE_DRIVERS = 2
     # AVAILABLE_TRUCKS = 3
 
 from HashMap import HashMap
-from queue import Queue
 
 class Truck:
     def __init__(self, id):
         self.id = id
         self.MAX_PKGS = 16
         self.AVG_MPH = 18
-        self.packages = HashMap()
         self.package_list = []
-        #
-        #self.delivery_route = Queue()
         self.pkg_count = 0
 
 
@@ -29,9 +25,6 @@ class Truck:
     # returns a list of packages
     # Time Complexity is O(1)
     # Space Complexity is O(1)
-    def get_packages(self):
-        return self.packages
-
     def get_package_list(self):
         return self.package_list
 
@@ -44,7 +37,6 @@ class Truck:
             return
         self.package_list.append(package)
         self.packages.add(package.id, package) # add package to HashMap --> O(1)
-        ### ADD TO NODE LIST
         self.pkg_count += 1
 
     # removes a package from Truck
@@ -52,6 +44,5 @@ class Truck:
     # Space Complexity is O(1)
     def remove_package(self, package):
         self.packages.delete(package.id, package) # remove package to HashMap --> O(1)
-        ### ADD TO NODE LIST
         self.pkg_count -= 1 # decrement
 

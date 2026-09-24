@@ -1,5 +1,4 @@
-from UI import UI
-# Package Object
+# Sam Merrill ID: 012638734
 
 class Package:
     def __init__(self, id, address, city, state, zipcode, deadline, weight, status):
@@ -43,19 +42,3 @@ class Package:
         self.zipcode = new_zipcode
         self.deadline = new_deadline
         self.status = new_status
-
-#     def print_info(self):
-#         print(UI.head + "ID: " +str(self.id))
-#         print(UI.green + "Address: " + self.address)
-#         print("City: " + self.city)
-#         print("State: " + self.state)
-#         print("Zipcode: " + self.zipcode)
-#         print("Deadline: " + str(self.deadline))
-#         print("Weight: " + self.weight)
-#         print("Status: " + self.status + UI.reset)
-#         print("********************************")
-
-# ## might need work?
-#     def print_info_by_id(self, id):
-#         if id is not None:
-#             self.print_info()
