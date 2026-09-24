@@ -11,6 +11,10 @@ class Package:
         self.weight = weight
         self.status = status
 
+        # testing
+        self.delivery_time = None
+        self.depart_time = None
+
     def __str__(self):
             return f"{self.id}, {self.address}, {self.deadline}, {self.status}"
 
@@ -34,6 +38,12 @@ class Package:
 
     def set_zipcode(self, zipcode):
         self.zipcode = zipcode
+
+    def get_delivery_time(self):
+        return self.delivery_time
+
+    def set_delivery_time(self, delivery_time):
+        self.delivery_time = delivery_time
 
 
     def update(self, new_address, new_city, new_zipcode, new_deadline, new_status):

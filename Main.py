@@ -109,80 +109,74 @@ def get_distance_info():
 #truck_time = 0
 
 
-def nearest_neighbor(package_list, distance_dict, truck_time, distance_traveled):
+def build_route(package_list, distance_dict, truck_time):
 
     route_list = []
-    shortest_path = 10.0
-    # make a copy of the package list to remove from
-    package_list_copy = package_list.copy()
-
+    packages_remaining = package_list.copy() # make a copy of the package list to remove from
     current_address = "HUB"
+    current_time = truck_time
+    distance_traveled = 0.0
 
-    while package_list_copy:
+    while packages_remaining:
         # find package in list that has lowest distance in dictionary
-        shortest_path, shortest_address = find_path(package_list_copy, distance_dict, current_address)
-       # print(shortest_path) print(shortest_address)
+        shortest_path, closest_package = nearest_neighbor(packages_remaining, distance_dict, current_address) # type: ignore
+
+        travel_time = shortest_path * (60/18) # calculate travel minutes
+        current_time += travel_time # add to current time
+
+        distance_traveled += shortest_path # add distance to total
+        current_address = get_package_address(closest_package)
+
+        Package.set_delivery_time(closest_package, current_time)
+
         
-        # remove package with shortest path and add it to route list
-        for index, package in enumerate(package_list_copy):
-            package_address = get_package_address(package)
-                
-            if (package_address == shortest_address):
-                next_package = package_list_copy.pop(index)
-                route_list.append(next_package) # add package to route list
-                break
-            #Package.set_status(next_package, "ENROUTE")
-        
-            travel_time = shortest_path * (60/18) # add time to truck
-            truck_time += travel_time
+        route_list.append(closest_package) # Add it to route list
+        packages_remaining.remove(closest_package) # remove package with shortest path 
 
-            
-            distance_traveled += shortest_path # Truck "travels"
-            current_address = shortest_address # Truck moves to new address to start again
-            #Package.set_status(next_package, "DELIVERED")
-
-        #     print(
-        #     f"{truck_time} - "
-        #     f"Package {Package.get_id(next_package)} "
-        #     f"delivered to {current_address}"
-        # )
-
-    #print(route_list)
-    #print(distance_traveled)
-    time.sleep(1)
+    time.sleep(.5)
     print(UI.red + "Truck heading back to HUB")
-    time.sleep(1)
+    time.sleep(.5)
 
 
     return_travel =  get_distance(current_address, "HUB", distance_dict)
     distance_traveled += return_travel
 
     print(UI.yellow + f"Route Distance Traveled: {distance_traveled:.2f} miles" + UI.reset)
-    print(UI.blue + f"Minutes On Road: {truck_time}" + UI.reset)
+    print(UI.blue + f"Finish Time: {format_time(current_time)}" + UI.reset)
 
     
+    return route_list, distance_traveled
+    #print(distance_traveled) print(route_list)
 
-    return route_list, distance_traveled, truck_time
-    # print(distance_traveled) print(route_list)
-    
-    pass
+########## TONIGHT ##########
+# fix nearest neihbor to just get route, maybe make route a dictionary
+# with the package as the key, and the distance from the previous(shortest path) as the value?
+
+# other than that, keep track of minutes passed from (60/18) * shortest path value
+# when time has passed, update the status from enroute to delivered, otherwise it's still enroute
+# so then the user can enter 11:27am for example, and we'll look through packages/trucks by
+# converting 11:27 into minutes, and then if package.delivery_time <= converted_time, then
+# it'll display as "delivered", and other packages as enroute still.
 
 
-def find_path(package_list, distance_dict, current_address):
+
+def nearest_neighbor(package_list, distance_dict, current_address):
         shortest_path = float("inf")
-        shortest_address = None
+        closest_package = None
         for package in package_list:
                 package_address = get_package_address(package)
+
                 distance = get_distance(current_address, package_address, distance_dict)
 
-                if distance < shortest_path: # and distance != 0.0:
+                if distance < shortest_path:
                     shortest_path = distance
-                    shortest_address = package_address
+                    closest_package = package
 
-        return shortest_path, shortest_address
+        return shortest_path, closest_package
 
 def get_distance(from_address, to_address, distance_dict):
     addresses = list(distance_dict.keys()) # put addresses into list for comparing
+
     if from_address not in addresses:
         print("FROM ADDRESS NOT FOUND:", repr(from_address))
         print("Available addresses:", addresses)
@@ -243,13 +237,93 @@ def get_package_address(package):
 
     return f"{address} ({zipcode})"
 
+def get_package_status(package, time_entered):
+
+    delivery_time = Package.get_delivery_time(package)
+
+    if delivery_time <= time_entered:
+        return "DELIVERED" 
+    if delivery_time is None:
+        return "AT HUB"
+    
+
+    return "ENROUTE"
+
+def format_time(minutes):
+
+    hours = int(minutes // 60)
+    mins = int(minutes % 60)
+
+    if hours >= 12:
+        period = "PM"
+    else:
+        period = "AM"
+
+    display_hour = hours % 12
+
+    if display_hour == 0:
+        display_hour = 12
+
+    return f"{display_hour}:{mins:02d} {period}"
+
+def print_package_statuses(package_list, time_entered):
+    print(f"Time Entered: {format_time(time_entered)}")
+    print("#####################################################################################")
+    print("ID   ADDRESS               STATUS               EST. DELIVERY TIME     CONSTRAINTS")
+    print("#####################################################################################")
+    for package in package_list:
+
+        status = get_package_status(package, time_entered)
+        delivery_time = format_time(Package.get_delivery_time(package))
+        print(f"{Package.get_id(package)}:  {Package.get_address(package)},   -->  {status}      --| Est. Delivery: {delivery_time}     {Package.get_status(package)}")
+
+###################################################################################################
+
+##########
+# times
+start_time = 8 * 60
+truck1_time = start_time
+truck2_time = start_time
+truck3_time = 545 # (9:05 am)
+
+
+distance_traveled = 0.0
+
+# take truck's package list and find it in distance dict
+truck1_packages = truck1.get_package_list()  #hashmap
+truck2_packages = truck2.get_package_list()
+truck3_packages = truck3.get_package_list()
+
+distance_data = get_distance_info() #dictionary
+distance_data = format_distance_dict(distance_data)
+
+#print(distance_data["1060 Dalton Ave S (84104)"][0]) Testing dictionary
+
+truck1_route_list, truck1_distance_traveled = build_route(truck1_packages, distance_data, truck1_time)
+truck2_route_list, truck2_distance_traveled = build_route(truck2_packages, distance_data, truck2_time)
+truck3_route_list, truck3_distance_traveled = build_route(truck3_packages, distance_data, truck3_time)
+
+total_distance = truck1_distance_traveled + truck2_distance_traveled + truck3_distance_traveled
+
+
+print_route_list(truck1_route_list, 1)
+print_route_list(truck2_route_list, 2)
+print_route_list(truck3_route_list, 3)
+print(UI.yellow + "*************************")
+print(f"Total Distance Traveled: {total_distance}" + UI.reset)
+
+
+print_package_statuses(truck1_route_list, 600)
+print_package_statuses(truck2_route_list, 600)
+print_package_statuses(truck3_route_list, 600)
+
+
+
+# else: raise ValueError("Not a truck number")
 
 
 
 ###################################################################################################
-
-
-
 ## Right now I will have the "main" ui here for checking packages & statuses
 
 # check status of package
@@ -269,6 +343,18 @@ def RunSimulation():
     match option:
         case 's':
             print(UI.head + "PACKAGE STATUS" + UI.reset)
+            #query_id = input("Enter a package ID to view status:  ")
+            print(UI.head + "TESTING! ----->")
+            time_entered = int(input(UI.green + "Enter a time:  "))
+
+            truck_num = int(input("Enter a truck #:  "))
+            if truck_num == 1:
+                print_package_statuses(truck1_route_list, time_entered)
+            elif truck_num == 2:
+                print_package_statuses(truck2_route_list, time_entered)
+            elif truck_num == 3:
+                print_package_statuses(truck3_route_list, time_entered)
+            
         case 't':
             print(UI.head + "ROUTE PROGRESS" + UI.reset)
             print(truck1)
@@ -276,6 +362,7 @@ def RunSimulation():
             print(truck3)
         case 'm':
             print(UI.head + "TOTAL MILEAGE" + UI.reset)
+            print(UI.green + str(total_distance))
 
     print(UI.blue + "Back to Menu: " + UI.yellow + "b ")
     print(UI.blue + "Quit Simulation: " + UI.yellow + "ANY ")
@@ -290,7 +377,7 @@ def RunSimulation():
         print("GOODBYE" + UI.reset)
 
 
-
+###################################################################################################
 
 start = input(UI.green + "Greetings, initiate Delivery Driver Simulation?  y/n:  " + UI.yellow)
 
@@ -315,41 +402,3 @@ if start == 'y' or start =='Y':
     RunSimulation()
 else:
     print(UI.red + "GOODBYE" + UI.reset)
-
-
-##########
-# times
-truck1_time = 0
-truck2_time = 0
-truck3_time = 0
-start_time = 8 * 60
-
-distance_traveled = 0.0
-
-# take truck's package list and find it in distance dict
-truck1_packages = truck1.get_package_list()  #hashmap
-truck2_packages = truck2.get_package_list()
-truck3_packages = truck3.get_package_list()
-
-distance_data = get_distance_info() #dictionary
-distance_data = format_distance_dict(distance_data)
-
-#print(distance_data["1060 Dalton Ave S (84104)"][0]) Testing dictionary
-
-truck1_route_list, truck1_distance_traveled, truck1_time = nearest_neighbor(truck1_packages, distance_data, truck1_time, distance_traveled)
-truck2_route_list, truck2_distance_traveled, truck2_time = nearest_neighbor(truck2_packages, distance_data, truck2_time, distance_traveled)
-truck3_route_list, truck3_distance_traveled, truck3_time = nearest_neighbor(truck3_packages, distance_data, truck3_time, distance_traveled)
-
-total_distance = truck1_distance_traveled + truck2_distance_traveled + truck3_distance_traveled
-truck1_time += start_time
-truck2_time += start_time
-truck3_time += start_time
-
-print_route_list(truck1_route_list, 1)
-print(f"Truck 1 time: {truck1_time / 60}")
-print_route_list(truck2_route_list, 2)
-print(f"Truck 2 time: {truck2_time / 60}")
-print_route_list(truck3_route_list, 3)
-print(f"Truck 3 time: {truck3_time / 60}")
-print(UI.yellow + "*************************")
-print(f"Total Distance Traveled: {total_distance}" + UI.reset)
