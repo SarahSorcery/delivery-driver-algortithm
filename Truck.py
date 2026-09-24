@@ -14,8 +14,9 @@ class Truck:
         self.MAX_PKGS = 16
         self.AVG_MPH = 18
         self.packages = HashMap()
+        self.package_list = []
         #
-        self.delivery_route = Queue()
+        #self.delivery_route = Queue()
         self.pkg_count = 0
 
 
@@ -31,6 +32,9 @@ class Truck:
     def get_packages(self):
         return self.packages
 
+    def get_package_list(self):
+        return self.package_list
+
     # adds a package to Truck
     # Time Complexity is O(3) --> O(1)
      # Space Complexity is O(1)
@@ -38,6 +42,7 @@ class Truck:
         if package is None:
             print(f"[DEBUG ALERT] Truck #{self.id} was handed a 'None' package! Skipping to prevent crash.")
             return
+        self.package_list.append(package)
         self.packages.add(package.id, package) # add package to HashMap --> O(1)
         ### ADD TO NODE LIST
         self.pkg_count += 1

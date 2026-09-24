@@ -24,6 +24,19 @@ class Package:
     def set_status(self, status):
         self.status = status
 
+    def get_address(self):
+        return self.address
+
+    def set_address(self, address):
+        self.address = address
+
+    def get_zipcode(self):
+        return self.zipcode
+
+    def set_zipcode(self, zipcode):
+        self.zipcode = zipcode
+
+
     def update(self, new_address, new_city, new_zipcode, new_deadline, new_status):
         self.address = new_address
         self.city = new_city
