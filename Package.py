@@ -16,7 +16,8 @@ class Package:
         self.depart_time = None
 
     def __str__(self):
-            return f"{self.id}, {self.address}, {self.deadline}, {self.status}"
+            return f"{self.id}, {self.address}, {self.deadline}, {self.city}, {self.zipcode}, {self.weight}, {self.status}"
+
 
     def get_id(self):
         return self.id
@@ -45,7 +46,9 @@ class Package:
     def set_delivery_time(self, delivery_time):
         self.delivery_time = delivery_time
 
-
+    def get_deadline(self):
+        return self.deadline
+    
     def update(self, new_address, new_city, new_zipcode, new_deadline, new_status):
         self.address = new_address
         self.city = new_city

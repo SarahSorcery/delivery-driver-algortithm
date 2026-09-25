@@ -9,70 +9,54 @@ from PackageReader import PackageReader
 pkg_reader = PackageReader()
 
 
-# Testing initializing a truck:
+# Testing initializing a truck:   
 def initialize_Truck1():
-    truck1.add_package(pkg_reader.get_package_by_id('13'))
-    truck1.add_package(pkg_reader.get_package_by_id('15'))
-    truck1.add_package(pkg_reader.get_package_by_id('14'))
-    truck1.add_package(pkg_reader.get_package_by_id('16'))
-
-    truck1.add_package(pkg_reader.get_package_by_id('19'))
-    truck1.add_package(pkg_reader.get_package_by_id('20'))
-    truck1.add_package(pkg_reader.get_package_by_id('1'))
-    truck1.add_package(pkg_reader.get_package_by_id('29'))
-
-    truck1.add_package(pkg_reader.get_package_by_id('7'))
+    truck1.add_package(pkg_reader.get_package_by_id('6'))
+    truck1.add_package(pkg_reader.get_package_by_id('28'))
     truck1.add_package(pkg_reader.get_package_by_id('25'))
+    truck1.add_package(pkg_reader.get_package_by_id('32'))
+    truck1.add_package(pkg_reader.get_package_by_id('22'))
+    truck1.add_package(pkg_reader.get_package_by_id('23'))
     truck1.add_package(pkg_reader.get_package_by_id('24'))
-    
-        
+    truck1.add_package(pkg_reader.get_package_by_id('26'))
+    truck1.add_package(pkg_reader.get_package_by_id('1'))
+    truck1.add_package(pkg_reader.get_package_by_id('6'))
+    truck1.add_package(pkg_reader.get_package_by_id('31'))
+    truck1.add_package(pkg_reader.get_package_by_id('40'))
 
 def initialize_Truck2():
-    truck2.add_package(pkg_reader.get_package_by_id('3'))
+    truck2.add_package(pkg_reader.get_package_by_id('13'))
+    truck2.add_package(pkg_reader.get_package_by_id('15'))
+    truck2.add_package(pkg_reader.get_package_by_id('14'))
+    truck2.add_package(pkg_reader.get_package_by_id('16'))
     truck2.add_package(pkg_reader.get_package_by_id('18'))
     truck2.add_package(pkg_reader.get_package_by_id('36'))
     truck2.add_package(pkg_reader.get_package_by_id('38'))
-
-    truck2.add_package(pkg_reader.get_package_by_id('5'))
-    truck2.add_package(pkg_reader.get_package_by_id('8'))
-    truck2.add_package(pkg_reader.get_package_by_id('9'))
-    truck2.add_package(pkg_reader.get_package_by_id('12'))
-
-    
-    truck2.add_package(pkg_reader.get_package_by_id('10'))
-    truck2.add_package(pkg_reader.get_package_by_id('11'))
-    truck2.add_package(pkg_reader.get_package_by_id('17'))
-    truck2.add_package(pkg_reader.get_package_by_id('21'))
+    truck2.add_package(pkg_reader.get_package_by_id('3'))
+    truck2.add_package(pkg_reader.get_package_by_id('19'))
+    truck2.add_package(pkg_reader.get_package_by_id('20'))
 
     truck2.add_package(pkg_reader.get_package_by_id('37'))
     truck2.add_package(pkg_reader.get_package_by_id('30'))
-        
+    truck2.add_package(pkg_reader.get_package_by_id('29'))
 
-    
-
-
-def initialize_Truck3():
-    
-    truck3.add_package(pkg_reader.get_package_by_id('6'))
-    truck3.add_package(pkg_reader.get_package_by_id('28'))
-    truck3.add_package(pkg_reader.get_package_by_id('34'))
-    truck3.add_package(pkg_reader.get_package_by_id('40'))
-
-    truck3.add_package(pkg_reader.get_package_by_id('39'))
-    truck3.add_package(pkg_reader.get_package_by_id('32'))
-    truck3.add_package(pkg_reader.get_package_by_id('27'))
-    truck3.add_package(pkg_reader.get_package_by_id('35'))
-
+def initialize_Truck3():   
     truck3.add_package(pkg_reader.get_package_by_id('2'))
-    truck3.add_package(pkg_reader.get_package_by_id('33'))
     truck3.add_package(pkg_reader.get_package_by_id('4'))
-    truck3.add_package(pkg_reader.get_package_by_id('23'))
-
-    truck3.add_package(pkg_reader.get_package_by_id('26'))
-    truck3.add_package(pkg_reader.get_package_by_id('22'))
-    truck3.add_package(pkg_reader.get_package_by_id('31'))
+    truck3.add_package(pkg_reader.get_package_by_id('5'))
+    truck3.add_package(pkg_reader.get_package_by_id('7'))
+    truck3.add_package(pkg_reader.get_package_by_id('8'))
+    truck3.add_package(pkg_reader.get_package_by_id('9'))
+    truck3.add_package(pkg_reader.get_package_by_id('10'))
+    truck3.add_package(pkg_reader.get_package_by_id('11'))
+    truck3.add_package(pkg_reader.get_package_by_id('12'))
+    truck3.add_package(pkg_reader.get_package_by_id('17'))
+    truck3.add_package(pkg_reader.get_package_by_id('21'))
+    truck3.add_package(pkg_reader.get_package_by_id('27'))
+    truck3.add_package(pkg_reader.get_package_by_id('33'))
+    truck3.add_package(pkg_reader.get_package_by_id('35'))
+    truck3.add_package(pkg_reader.get_package_by_id('39'))
     
-
 truck1 = Truck("1")
 truck2 = Truck("2")
 truck3 = Truck("3")
@@ -80,18 +64,6 @@ truck3 = Truck("3")
 initialize_Truck1() #
 initialize_Truck2() #
 initialize_Truck3() #
-
-
-
-# Package Update
-update_package_9 = False
-
-# Correct address for #9 below
-# AFTER 10:20 am
-# 410 S State St., Salt Lake City, UT 84111
-
-
-
 
 #######
 def get_distance_info():
@@ -103,11 +75,6 @@ def get_distance_info():
             street_address = " ".join(address.split()) # clean up address
             distance_dict[street_address] = line.copy() # add address & distance info to dictionary
     return distance_dict
-
-
-
-#truck_time = 0
-
 
 def build_route(package_list, distance_dict, truck_time):
 
@@ -133,19 +100,10 @@ def build_route(package_list, distance_dict, truck_time):
         route_list.append(closest_package) # Add it to route list
         packages_remaining.remove(closest_package) # remove package with shortest path 
 
-    time.sleep(.5)
-    print(UI.red + "Truck heading back to HUB")
-    time.sleep(.5)
-
-
     return_travel =  get_distance(current_address, "HUB", distance_dict)
     distance_traveled += return_travel
 
-    print(UI.yellow + f"Route Distance Traveled: {distance_traveled:.2f} miles" + UI.reset)
-    print(UI.blue + f"Finish Time: {format_time(current_time)}" + UI.reset)
-
-    
-    return route_list, distance_traveled
+    return route_list, distance_traveled, current_time
     #print(distance_traveled) print(route_list)
 
 ########## TONIGHT ##########
@@ -157,8 +115,6 @@ def build_route(package_list, distance_dict, truck_time):
 # so then the user can enter 11:27am for example, and we'll look through packages/trucks by
 # converting 11:27 into minutes, and then if package.delivery_time <= converted_time, then
 # it'll display as "delivered", and other packages as enroute still.
-
-
 
 def nearest_neighbor(package_list, distance_dict, current_address):
         shortest_path = float("inf")
@@ -177,30 +133,17 @@ def nearest_neighbor(package_list, distance_dict, current_address):
 def get_distance(from_address, to_address, distance_dict):
     addresses = list(distance_dict.keys()) # put addresses into list for comparing
 
-    if from_address not in addresses:
-        print("FROM ADDRESS NOT FOUND:", repr(from_address))
-        print("Available addresses:", addresses)
-        raise ValueError(f"Address not found: {from_address!r}")
-
-    if to_address not in addresses:
-        print("TO ADDRESS NOT FOUND:", repr(to_address))
-        print("Available addresses:", addresses)
-        raise ValueError(f"Address not found: {to_address!r}")
-
     if from_address == to_address:
         return 0.0
-
 
     index1 = addresses.index(from_address)
     index2 = addresses.index(to_address)
     
-
     if index1 > index2:
         distance = distance_dict[from_address][index2]
     else:
         distance = distance_dict[to_address][index1]
     return float(distance)
-
 
 def print_route_list(route_list, truck_num):
     print(UI.head + f"Truck {truck_num} Route:" + UI.green)
@@ -209,7 +152,6 @@ def print_route_list(route_list, truck_num):
     UI.reset
 
 def format_address(address):
-
     address = address.strip()
 
     address = address.replace("South", "S")
@@ -220,7 +162,6 @@ def format_address(address):
     return address
 
 def format_distance_dict(distance_dict):
-
     formatted_dict = {}
 
     for address, distances in distance_dict.items():
@@ -229,153 +170,161 @@ def format_distance_dict(distance_dict):
 
     return formatted_dict
 
-
 def get_package_address(package):
-
     address = format_address(Package.get_address(package))
     zipcode = str(Package.get_zipcode(package)).strip()
 
     return f"{address} ({zipcode})"
 
-def get_package_status(package, time_entered):
-
+def get_package_status(package, time_entered, truck_time):
     delivery_time = Package.get_delivery_time(package)
+    constraint = Package.get_status(package)
 
+    if constraint == "Delayed on flight---will not arrive to depot until 9:05 am" and time_entered <= 545:
+        return UI.red + "DELAYED" + UI.reset
+    if time_entered <= truck_time:
+        return UI.yellow + "AT HUB" + UI.reset
     if delivery_time <= time_entered:
-        return "DELIVERED" 
-    if delivery_time is None:
-        return "AT HUB"
-    
-
-    return "ENROUTE"
+        return UI.green + "DELIVERED" + UI.reset 
+    return UI.head + "ENROUTE" + UI.reset
 
 def format_time(minutes):
-
     hours = int(minutes // 60)
     mins = int(minutes % 60)
 
     if hours >= 12:
-        period = "PM"
+        tod = "PM"
     else:
-        period = "AM"
+        tod = "AM"
 
     display_hour = hours % 12
-
     if display_hour == 0:
         display_hour = 12
 
-    return f"{display_hour}:{mins:02d} {period}"
+    return f"{display_hour}:{mins:02d} {tod}"
 
-def print_package_statuses(package_list, time_entered):
-    print(f"Time Entered: {format_time(time_entered)}")
+def print_package_statuses(package_list, time_entered, truck_time, truck_finish_time):
+    print(UI.reset + f"Time Entered: {format_time(time_entered)}")
+    print(f"Start Time: {format_time(truck_time)}    Finish Time: {format_time(truck_finish_time)}")
     print("#####################################################################################")
     print("ID   ADDRESS               STATUS               EST. DELIVERY TIME     CONSTRAINTS")
     print("#####################################################################################")
     for package in package_list:
 
-        status = get_package_status(package, time_entered)
+        status = get_package_status(package, time_entered, truck_time)
         delivery_time = format_time(Package.get_delivery_time(package))
-        print(f"{Package.get_id(package)}:  {Package.get_address(package)},   -->  {status}      --| Est. Delivery: {delivery_time}     {Package.get_status(package)}")
+        #print(f"{package}  --| Est. Delivery: {delivery_time}")
+        print(f"{Package.get_id(package)}:  {Package.get_address(package)},   -->  {status}      --| Est. Delivery: {delivery_time}  --| Deadline: {Package.get_deadline(package)}   {Package.get_status(package)}")
 
+def print_all_statuses(time_entered):
+    print(UI.head + "TRUCK #1" + UI.reset)
+    print_package_statuses(truck1_route_list, time_entered, truck1_time, truck1_finish_time)
+    print(UI.head + "TRUCK #2" + UI.reset)
+    print_package_statuses(truck2_route_list, time_entered, truck2_time, truck2_finish_time)
+    print(UI.head + "TRUCK #3" + UI.reset)
+    print_package_statuses(truck3_route_list, time_entered, truck3_time, truck3_finish_time)
+
+# Package Status Options:
+def status_options():
+    print(UI.head + "PACKAGE STATUS" + UI.reset)
+
+    time_entered = int(input(UI.green + "Enter a time:  "))
+
+    truck_amt = input("Enter ALL or Truck #: ")
+    if truck_amt == '1':
+        print_package_statuses(truck1_route_list, time_entered, truck1_time)
+    elif truck_amt == '2':
+        print_package_statuses(truck2_route_list, time_entered, truck2_time)
+    elif truck_amt == '3':
+        print_package_statuses(truck3_route_list, time_entered, truck3_time)
+    else:
+        print_all_statuses(time_entered)
+    
 ###################################################################################################
-
-##########
 # times
-start_time = 8 * 60
-truck1_time = start_time
-truck2_time = start_time
-truck3_time = 545 # (9:05 am)
-
-
+truck1_time = 545 # (9:05 am)
+truck2_time = 480 # (8:00 am)
+truck3_time = 600 # (10:00 am)
 distance_traveled = 0.0
-
+    
 # take truck's package list and find it in distance dict
 truck1_packages = truck1.get_package_list()  #hashmap
 truck2_packages = truck2.get_package_list()
 truck3_packages = truck3.get_package_list()
-
+    
 distance_data = get_distance_info() #dictionary
 distance_data = format_distance_dict(distance_data)
-
 #print(distance_data["1060 Dalton Ave S (84104)"][0]) Testing dictionary
-
-truck1_route_list, truck1_distance_traveled = build_route(truck1_packages, distance_data, truck1_time)
-truck2_route_list, truck2_distance_traveled = build_route(truck2_packages, distance_data, truck2_time)
-truck3_route_list, truck3_distance_traveled = build_route(truck3_packages, distance_data, truck3_time)
-
+        
+truck1_route_list, truck1_distance_traveled, truck1_finish_time = build_route(truck1_packages, distance_data, truck1_time)
+truck2_route_list, truck2_distance_traveled, truck2_finish_time = build_route(truck2_packages, distance_data, truck2_time)
+truck3_route_list, truck3_distance_traveled, truck3_finish_time = build_route(truck3_packages, distance_data, truck3_time)
+    
 total_distance = truck1_distance_traveled + truck2_distance_traveled + truck3_distance_traveled
-
-
-print_route_list(truck1_route_list, 1)
-print_route_list(truck2_route_list, 2)
-print_route_list(truck3_route_list, 3)
-print(UI.yellow + "*************************")
-print(f"Total Distance Traveled: {total_distance}" + UI.reset)
-
-
-print_package_statuses(truck1_route_list, 600)
-print_package_statuses(truck2_route_list, 600)
-print_package_statuses(truck3_route_list, 600)
-
-
-
-# else: raise ValueError("Not a truck number")
-
-
-
 ###################################################################################################
-## Right now I will have the "main" ui here for checking packages & statuses
+def run_simulation():
 
-# check status of package
-# check truck route progress given a time
-# display stats of trucks
-# display total milage of all trucks
-
-def RunSimulation():
-
-    # Start
+    # MENU OPTIONS
     print(UI.head + "Please choose an option from below by entering the specific key value: ")
     print(UI.blue + "Display Package Status: " + UI.yellow + "s ")
-    print(UI.blue + "Display Truck Route Progress: " + UI.yellow + "t ")
     print(UI.blue + "Display Truck Mileage Totals: " + UI.yellow + "m ")
+    print(UI.blue + "Display Package Information by ID: " + UI.yellow + "l")
     option = input(UI.yellow)
 
     match option:
-        case 's':
+        case 's': # STATUSES & TIME
             print(UI.head + "PACKAGE STATUS" + UI.reset)
-            #query_id = input("Enter a package ID to view status:  ")
-            print(UI.head + "TESTING! ----->")
-            time_entered = int(input(UI.green + "Enter a time:  "))
-
-            truck_num = int(input("Enter a truck #:  "))
-            if truck_num == 1:
-                print_package_statuses(truck1_route_list, time_entered)
-            elif truck_num == 2:
-                print_package_statuses(truck2_route_list, time_entered)
-            elif truck_num == 3:
-                print_package_statuses(truck3_route_list, time_entered)
             
-        case 't':
-            print(UI.head + "ROUTE PROGRESS" + UI.reset)
-            print(truck1)
-            print(truck2)
-            print(truck3)
-        case 'm':
+            time_entered = int(input(UI.green + "Enter a time:  "))
+            if time_entered >= 620: # 10:20 AM package #9 updates
+                package_9 = pkg_reader.get_package_by_id('9')
+                #Correct address for #9 below
+                # AFTER 10:20 am # 410 S State St., Salt Lake City, UT 84111
+                Package.update(package_9, "410 S State St", "Salt Lake City", "84111", "AFTER 10:20am", " ")
+
+            truck_amt = input("Enter ALL or Truck #: ")
+            if truck_amt == '1':
+                print_package_statuses(truck1_route_list, time_entered,truck1_finish_time)
+            elif truck_amt == '2':
+                print_package_statuses(truck2_route_list, time_entered,truck2_finish_time)
+            elif truck_amt == '3':
+                print_package_statuses(truck3_route_list, time_entered,truck3_finish_time)
+            else:
+                print_all_statuses(time_entered)
+
+        case 'm': # MILEAGE
+            print(UI.reset + "**************************************************")
             print(UI.head + "TOTAL MILEAGE" + UI.reset)
-            print(UI.green + str(total_distance))
+            print(UI.green + f"{total_distance} mi")
+            print(UI.head + "Truck #1: " + UI.green + f"{truck1_distance_traveled:.2f} mi")
+            print(UI.blue + f"Start Time: {format_time(truck1_time)}")
+            print(f"Finish Time: {format_time(truck1_finish_time)}")
+
+            print(UI.head + "Truck #2: " + UI.green + f"{truck2_distance_traveled:.2f} mi")
+            print(UI.blue + f"Start Time: {format_time(truck2_time)}")
+            print(f"Finish Time: {format_time(truck2_finish_time)}")
+            
+            print(UI.head + "Truck #3: " + UI.green + f"{truck3_distance_traveled:.2f} mi")
+            print(UI.blue + f"Start Time: {format_time(truck3_time)}")
+            print(f"Finish Time: {format_time(truck3_finish_time)}")
+            print(UI.reset + "**************************************************")
+
+        case 'l': # PACKAGE LOOKUP
+            entered_id = input("Enter a package ID to lookup data: ")
+            data = pkg_reader.get_package_by_id(entered_id)
+            print(data)
 
     print(UI.blue + "Back to Menu: " + UI.yellow + "b ")
     print(UI.blue + "Quit Simulation: " + UI.yellow + "ANY ")
 
+    # MORE CHOICES OR END SIMULATION
     option = input(UI.yellow)
-
     if option == 'b':
-        RunSimulation()
+        run_simulation()
     else:
         print(UI.red + "Ending Simulation")
         time.sleep(1)
         print("GOODBYE" + UI.reset)
-
 
 ###################################################################################################
 
@@ -385,20 +334,6 @@ if start == 'y' or start =='Y':
     # run simulation
     print(UI.green + "STARTING SIMULATION" + UI.reset)
     time.sleep(1)
-
-    update = input(UI.red + "ALERT! : New information has come in for package #9, would you like to update? " 
-              + UI.yellow + "y/n: ")
-    if update == 'y':
-        update_package_9 = True
-        package_9 = pkg_reader.get_package_by_id('9')
-        # Package.set_address(package_9, "")
-        # Package.set_zipcode(package_9, "")
-        #Correct address for #9 below
-        # AFTER 10:20 am
-        # 410 S State St., Salt Lake City, UT 84111
-        Package.update(package_9, "410 S State St", "Salt Lake City", "84111", "AFTER 10:20am", " ")
-
-
-    RunSimulation()
+    run_simulation()
 else:
     print(UI.red + "GOODBYE" + UI.reset)
