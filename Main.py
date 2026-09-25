@@ -9,7 +9,7 @@ from PackageReader import PackageReader
 pkg_reader = PackageReader()
 
 
-# Testing initializing a truck:   
+# Add packages to trucks
 def initialize_Truck1():
     truck1.add_package(pkg_reader.get_package_by_id('6'))
     truck1.add_package(pkg_reader.get_package_by_id('28'))
@@ -56,7 +56,7 @@ def initialize_Truck3():
     truck3.add_package(pkg_reader.get_package_by_id('33'))
     truck3.add_package(pkg_reader.get_package_by_id('35'))
     truck3.add_package(pkg_reader.get_package_by_id('39'))
-    
+
 truck1 = Truck("1")
 truck2 = Truck("2")
 truck3 = Truck("3")
@@ -65,7 +65,7 @@ initialize_Truck1() #
 initialize_Truck2() #
 initialize_Truck3() #
 
-#######
+###################################################################################################
 def get_distance_info():
     distance_dict = dict() # create a dictionary for references
     with open("WGUPS-distance-table.csv") as csvfile:
@@ -105,16 +105,6 @@ def build_route(package_list, distance_dict, truck_time):
 
     return route_list, distance_traveled, current_time
     #print(distance_traveled) print(route_list)
-
-########## TONIGHT ##########
-# fix nearest neihbor to just get route, maybe make route a dictionary
-# with the package as the key, and the distance from the previous(shortest path) as the value?
-
-# other than that, keep track of minutes passed from (60/18) * shortest path value
-# when time has passed, update the status from enroute to delivered, otherwise it's still enroute
-# so then the user can enter 11:27am for example, and we'll look through packages/trucks by
-# converting 11:27 into minutes, and then if package.delivery_time <= converted_time, then
-# it'll display as "delivered", and other packages as enroute still.
 
 def nearest_neighbor(package_list, distance_dict, current_address):
         shortest_path = float("inf")
@@ -224,7 +214,6 @@ def print_all_statuses(time_entered):
     print(UI.head + "TRUCK #3" + UI.reset)
     print_package_statuses(truck3_route_list, time_entered, truck3_time, truck3_finish_time)
 
-# Package Status Options:
 def status_options():
     print(UI.head + "PACKAGE STATUS" + UI.reset)
 
@@ -325,7 +314,6 @@ def run_simulation():
         print(UI.red + "Ending Simulation")
         time.sleep(1)
         print("GOODBYE" + UI.reset)
-
 ###################################################################################################
 
 start = input(UI.green + "Greetings, initiate Delivery Driver Simulation?  y/n:  " + UI.yellow)
