@@ -10,6 +10,9 @@ pkg_reader = PackageReader()
 
 
 # Add packages to trucks
+
+# Time Complexity: O(n)
+# Space Complexity: O(n)
 def initialize_Truck1():
     truck1.add_package(pkg_reader.get_package_by_id('6'))
     truck1.add_package(pkg_reader.get_package_by_id('28'))
@@ -61,58 +64,64 @@ truck1 = Truck("1")
 truck2 = Truck("2")
 truck3 = Truck("3")
 
-initialize_Truck1() #
-initialize_Truck2() #
-initialize_Truck3() #
+initialize_Truck1() # O(n)
+initialize_Truck2() # O(n)
+initialize_Truck3() # O(n)
 
 ###################################################################################################
+# Time Complexity: O(n) n = rows in file
+# Space Complexity: O(n)
 def get_distance_info():
-    distance_dict = dict() # create a dictionary for references
+    distance_table = dict() # create for references
     with open("WGUPS-distance-table.csv") as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
-        for line in reader:
+        for line in reader: # O(n)
             address = line.pop(0)  # remove address and assign for key
             street_address = " ".join(address.split()) # clean up address
-            distance_dict[street_address] = line.copy() # add address & distance info to dictionary
-    return distance_dict
+            distance_table[street_address] = line.copy() # add address & distance info to references
+    return distance_table
 
-def build_route(package_list, distance_dict, truck_time):
+# Time Complexity: O(p^2 * a) + O(p^2) --> o(p^2 * a)
+# Space Complexity: O(p)
+def build_route(package_list, distance_table, truck_time):
 
     route_list = []
-    packages_remaining = package_list.copy() # make a copy of the package list to remove from
+    packages_remaining = package_list.copy() # copy pkg list to remove from --> [O(p)] time & space
     current_address = "HUB"
     current_time = truck_time
     distance_traveled = 0.0
 
-    while packages_remaining:
-        # find package in list that has lowest distance in dictionary
-        shortest_path, closest_package = nearest_neighbor(packages_remaining, distance_dict, current_address) # type: ignore
+    while packages_remaining: # O(n)
+        # find package in list that has lowest distance O(n)
+        shortest_path, closest_package = nearest_neighbor(packages_remaining, distance_table, current_address) # type: ignore
 
         travel_time = shortest_path * (60/18) # calculate travel minutes
         current_time += travel_time # add to current time
 
         distance_traveled += shortest_path # add distance to total
-        current_address = get_package_address(closest_package)
+        current_address = get_package_address(closest_package) # O(a)
 
         Package.set_delivery_time(closest_package, current_time)
 
-        
         route_list.append(closest_package) # Add it to route list
-        packages_remaining.remove(closest_package) # remove package with shortest path 
+        packages_remaining.remove(closest_package) # remove package with shortest path --> O(p) avg
 
-    return_travel =  get_distance(current_address, "HUB", distance_dict)
+    # add return distance to total --> O(d)
+    return_travel =  get_distance(current_address, "HUB", distance_table)
     distance_traveled += return_travel
 
     return route_list, distance_traveled, current_time
     #print(distance_traveled) print(route_list)
 
-def nearest_neighbor(package_list, distance_dict, current_address):
+# Time Complexity: O(p * (a + n))
+# Space Complexity: O(1)
+def nearest_neighbor(package_list, distance_table, current_address):
         shortest_path = float("inf")
         closest_package = None
-        for package in package_list:
-                package_address = get_package_address(package)
+        for package in package_list: # O(p)
+                package_address = get_package_address(package) # O(a)
 
-                distance = get_distance(current_address, package_address, distance_dict)
+                distance = get_distance(current_address, package_address, distance_table) # O(n)
 
                 if distance < shortest_path:
                     shortest_path = distance
@@ -120,52 +129,68 @@ def nearest_neighbor(package_list, distance_dict, current_address):
 
         return shortest_path, closest_package
 
-def get_distance(from_address, to_address, distance_dict):
-    addresses = list(distance_dict.keys()) # put addresses into list for comparing
+# Time Complexity: O(n)
+# Space Complexity: O(n) (creating a list)
+def get_distance(from_address, to_address, distance_table):
+    # put addresses into list for comparing
+    addresses = list(distance_table.keys()) # O(n)
 
-    if from_address == to_address:
+    if from_address == to_address: # O(1)
         return 0.0
 
-    index1 = addresses.index(from_address)
-    index2 = addresses.index(to_address)
-    
+    index1 = addresses.index(from_address) # O(n)
+    index2 = addresses.index(to_address) # O(n)
+    # finds distance in bottom part of csv file based on which index is greater
     if index1 > index2:
-        distance = distance_dict[from_address][index2]
+        distance = distance_table[from_address][index2] # O(1)
     else:
-        distance = distance_dict[to_address][index1]
-    return float(distance)
-
+        distance = distance_table[to_address][index1] # O(1)
+    return float(distance) # O(1)
+###################################################################################################
+# Time Complexity: O(n)
+# Space Complexity: O(1)
+# loops through and prints packages in route of specified truck
 def print_route_list(route_list, truck_num):
     print(UI.head + f"Truck {truck_num} Route:" + UI.green)
     for package in route_list:
         print(package)
     UI.reset
 
+# Time Complexity: O(4n) --> O(n)
+# Space Complexity: O(n) (replaces creates new instance)
+# fixes address for later comparisons
 def format_address(address):
     address = address.strip()
-
     address = address.replace("South", "S")
     address = address.replace("North", "N")
     address = address.replace("East", "E")
     address = address.replace("West", "W")
-
     return address
 
-def format_distance_dict(distance_dict):
-    formatted_dict = {}
+# Time Complexity: O(n x m) n = addresses, m = format_address
+# Space Complexity: O(1)
+# fixes all data
+def format_distance_table(distance_table):
+    formatted_table = {}
 
-    for address, distances in distance_dict.items():
-        fixed_address = format_address(address)
-        formatted_dict[fixed_address] = distances
+    for address, distances in distance_table.items(): # O(n)
+        fixed_address = format_address(address) # O(n)
+        formatted_table[fixed_address] = distances
 
-    return formatted_dict
+    return formatted_table
 
+# Time Complexity: O(n)
+# Space Complexity: O(n) 
+# returns package address & zipcode
 def get_package_address(package):
     address = format_address(Package.get_address(package))
     zipcode = str(Package.get_zipcode(package)).strip()
 
     return f"{address} ({zipcode})"
 
+# Time Complexity: O(1)
+# Space Complexity: O(1)
+# returns status depending on if the delivery time has passed in simulation
 def get_package_status(package, time_entered, truck_time):
     delivery_time = Package.get_delivery_time(package)
     constraint = Package.get_status(package)
@@ -178,9 +203,12 @@ def get_package_status(package, time_entered, truck_time):
         return UI.green + "DELIVERED" + UI.reset 
     return UI.head + "ENROUTE" + UI.reset
 
-def format_time(minutes):
-    hours = int(minutes // 60)
-    mins = int(minutes % 60)
+# Time Complexity: O(1)
+# Space Complexity: O(1)
+# formats inputted minutes to 12hr AM/PM format
+def format_time(mins):
+    hours = int(mins // 60)
+    mins = int(mins % 60)
 
     if hours >= 12:
         tod = "PM"
@@ -193,6 +221,10 @@ def format_time(minutes):
 
     return f"{display_hour}:{mins:02d} {tod}"
 
+
+# Time Complexity: O(n), n = # of pkgs
+# Space Complexity: O(1)
+# prints info & status of packages by truck
 def print_package_statuses(package_list, time_entered, truck_time, truck_finish_time):
     print(UI.reset + f"Time Entered: {format_time(time_entered)}")
     print(f"Start Time: {format_time(truck_time)}    Finish Time: {format_time(truck_finish_time)}")
@@ -206,6 +238,9 @@ def print_package_statuses(package_list, time_entered, truck_time, truck_finish_
         #print(f"{package}  --| Est. Delivery: {delivery_time}")
         print(f"{Package.get_id(package)}:  {Package.get_address(package)},   -->  {status}      --| Est. Delivery: {delivery_time}  --| Deadline: {Package.get_deadline(package)}   {Package.get_status(package)}")
 
+# Time Complexity: O(n1 + n2 + n3) --> O(n), n = # of pkgs
+# Space Complexity: O(1)
+# prints info & status of packages of all trucks
 def print_all_statuses(time_entered):
     print(UI.head + "TRUCK #1" + UI.reset)
     print_package_statuses(truck1_route_list, time_entered, truck1_time, truck1_finish_time)
@@ -214,6 +249,9 @@ def print_all_statuses(time_entered):
     print(UI.head + "TRUCK #3" + UI.reset)
     print_package_statuses(truck3_route_list, time_entered, truck3_time, truck3_finish_time)
 
+# Time Complexity: O(n), n = # of pkgs
+# Space Complexity: O(1)
+# asks user for options and prints status info accordingly
 def status_options():
     print(UI.head + "PACKAGE STATUS" + UI.reset)
 
@@ -229,21 +267,21 @@ def status_options():
     else:
         print_all_statuses(time_entered)
     
-###################################################################################################
+####################################################################################################
 # times
 truck1_time = 545 # (9:05 am)
 truck2_time = 480 # (8:00 am)
 truck3_time = 600 # (10:00 am)
 distance_traveled = 0.0
     
-# take truck's package list and find it in distance dict
+# take truck's package list and find it in distance data
 truck1_packages = truck1.get_package_list()  #hashmap
 truck2_packages = truck2.get_package_list()
 truck3_packages = truck3.get_package_list()
     
-distance_data = get_distance_info() #dictionary
-distance_data = format_distance_dict(distance_data)
-#print(distance_data["1060 Dalton Ave S (84104)"][0]) Testing dictionary
+distance_data = get_distance_info() 
+distance_data = format_distance_table(distance_data)
+#print(distance_data["1060 Dalton Ave S (84104)"][0])
         
 truck1_route_list, truck1_distance_traveled, truck1_finish_time = build_route(truck1_packages, distance_data, truck1_time)
 truck2_route_list, truck2_distance_traveled, truck2_finish_time = build_route(truck2_packages, distance_data, truck2_time)
@@ -257,10 +295,12 @@ def run_simulation():
     print(UI.head + "Please choose an option from below by entering the specific key value: ")
     print(UI.blue + "Display Package Status: " + UI.yellow + "s ")
     print(UI.blue + "Display Truck Mileage Totals: " + UI.yellow + "m ")
-    print(UI.blue + "Display Package Information by ID: " + UI.yellow + "l")
+    print(UI.blue + "Lookup Package Information by ID: " + UI.yellow + "l")
     option = input(UI.yellow)
 
     match option:
+        # Time Complexity: O(n)
+        # Space Complexity: O(1)
         case 's': # STATUSES & TIME
             print(UI.head + "PACKAGE STATUS" + UI.reset)
             
@@ -273,14 +313,15 @@ def run_simulation():
 
             truck_amt = input("Enter ALL or Truck #: ")
             if truck_amt == '1':
-                print_package_statuses(truck1_route_list, time_entered,truck1_finish_time)
+                print_package_statuses(truck1_route_list, time_entered, truck1_time, truck1_finish_time)
             elif truck_amt == '2':
-                print_package_statuses(truck2_route_list, time_entered,truck2_finish_time)
+                print_package_statuses(truck2_route_list, time_entered, truck2_time, truck2_finish_time)
             elif truck_amt == '3':
-                print_package_statuses(truck3_route_list, time_entered,truck3_finish_time)
+                print_package_statuses(truck3_route_list, time_entered, truck3_time, truck3_finish_time)
             else:
                 print_all_statuses(time_entered)
-
+        # Time Complexity: O(1)
+        # Space Complexity: O(1)
         case 'm': # MILEAGE
             print(UI.reset + "**************************************************")
             print(UI.head + "TOTAL MILEAGE" + UI.reset)
@@ -297,10 +338,11 @@ def run_simulation():
             print(UI.blue + f"Start Time: {format_time(truck3_time)}")
             print(f"Finish Time: {format_time(truck3_finish_time)}")
             print(UI.reset + "**************************************************")
-
+        # Time Complexity: O(1)
+        # Space Complexity: O(1)
         case 'l': # PACKAGE LOOKUP
             entered_id = input("Enter a package ID to lookup data: ")
-            data = pkg_reader.get_package_by_id(entered_id)
+            data = pkg_reader.get_package_by_id(entered_id) # O(1)
             print(data)
 
     print(UI.blue + "Back to Menu: " + UI.yellow + "b ")
@@ -309,13 +351,13 @@ def run_simulation():
     # MORE CHOICES OR END SIMULATION
     option = input(UI.yellow)
     if option == 'b':
-        run_simulation()
+        run_simulation() # O(n), runs n times --> recursive
     else:
         print(UI.red + "Ending Simulation")
         time.sleep(1)
         print("GOODBYE" + UI.reset)
 ###################################################################################################
-
+# START OF PROGRAM
 start = input(UI.green + "Greetings, initiate Delivery Driver Simulation?  y/n:  " + UI.yellow)
 
 if start == 'y' or start =='Y':

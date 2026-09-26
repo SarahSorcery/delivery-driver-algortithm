@@ -11,13 +11,14 @@ class Package:
         self.weight = weight
         self.status = status
 
-        # testing
         self.delivery_time = None
         self.depart_time = None
 
     def __str__(self):
             return f"{self.id}, {self.address}, {self.deadline}, {self.city}, {self.zipcode}, {self.weight}, {self.status}"
 
+    # Time Complexity: O(1) for all
+    # Space Complexity: O(1) for all
 
     def get_id(self):
         return self.id
