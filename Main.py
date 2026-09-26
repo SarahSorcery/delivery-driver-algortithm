@@ -225,9 +225,10 @@ def format_time(mins):
 # Time Complexity: O(n), n = # of pkgs
 # Space Complexity: O(1)
 # prints info & status of packages by truck
-def print_package_statuses(package_list, time_entered, truck_time, truck_finish_time):
+def print_package_statuses(package_list, time_entered, truck_time, truck_finish_time, truck_distance):
     print(UI.reset + f"Time Entered: {format_time(time_entered)}")
     print(f"Start Time: {format_time(truck_time)}    Finish Time: {format_time(truck_finish_time)}")
+    print(f"Miles Traveled: {truck_distance:.2f} mi")
     print("#####################################################################################")
     print("ID   ADDRESS               STATUS               EST. DELIVERY TIME     CONSTRAINTS")
     print("#####################################################################################")
@@ -243,11 +244,11 @@ def print_package_statuses(package_list, time_entered, truck_time, truck_finish_
 # prints info & status of packages of all trucks
 def print_all_statuses(time_entered):
     print(UI.head + "TRUCK #1" + UI.reset)
-    print_package_statuses(truck1_route_list, time_entered, truck1_time, truck1_finish_time)
+    print_package_statuses(truck1_route_list, time_entered, truck1_time, truck1_finish_time, truck1_distance_traveled)
     print(UI.head + "TRUCK #2" + UI.reset)
-    print_package_statuses(truck2_route_list, time_entered, truck2_time, truck2_finish_time)
+    print_package_statuses(truck2_route_list, time_entered, truck2_time, truck2_finish_time, truck2_distance_traveled)
     print(UI.head + "TRUCK #3" + UI.reset)
-    print_package_statuses(truck3_route_list, time_entered, truck3_time, truck3_finish_time)
+    print_package_statuses(truck3_route_list, time_entered, truck3_time, truck3_finish_time, truck3_distance_traveled)
 
 # Time Complexity: O(n), n = # of pkgs
 # Space Complexity: O(1)
@@ -259,11 +260,11 @@ def status_options():
 
     truck_amt = input("Enter ALL or Truck #: ")
     if truck_amt == '1':
-        print_package_statuses(truck1_route_list, time_entered, truck1_time)
+        print_package_statuses(truck1_route_list, time_entered, truck1_time, truck1_distance_traveled)
     elif truck_amt == '2':
-        print_package_statuses(truck2_route_list, time_entered, truck2_time)
+        print_package_statuses(truck2_route_list, time_entered, truck2_time, truck2_distance_traveled)
     elif truck_amt == '3':
-        print_package_statuses(truck3_route_list, time_entered, truck3_time)
+        print_package_statuses(truck3_route_list, time_entered, truck3_time, truck3_distance_traveled)
     else:
         print_all_statuses(time_entered)
     
@@ -313,13 +314,14 @@ def run_simulation():
 
             truck_amt = input("Enter ALL or Truck #: ")
             if truck_amt == '1':
-                print_package_statuses(truck1_route_list, time_entered, truck1_time, truck1_finish_time)
+                print_package_statuses(truck1_route_list, time_entered, truck1_time, truck1_finish_time, truck3_distance_traveled)
             elif truck_amt == '2':
-                print_package_statuses(truck2_route_list, time_entered, truck2_time, truck2_finish_time)
+                print_package_statuses(truck2_route_list, time_entered, truck2_time, truck2_finish_time, truck3_distance_traveled)
             elif truck_amt == '3':
-                print_package_statuses(truck3_route_list, time_entered, truck3_time, truck3_finish_time)
+                print_package_statuses(truck3_route_list, time_entered, truck3_time, truck3_finish_time, truck3_distance_traveled)
             else:
                 print_all_statuses(time_entered)
+
         # Time Complexity: O(1)
         # Space Complexity: O(1)
         case 'm': # MILEAGE
@@ -338,6 +340,7 @@ def run_simulation():
             print(UI.blue + f"Start Time: {format_time(truck3_time)}")
             print(f"Finish Time: {format_time(truck3_finish_time)}")
             print(UI.reset + "**************************************************")
+
         # Time Complexity: O(1)
         # Space Complexity: O(1)
         case 'l': # PACKAGE LOOKUP
