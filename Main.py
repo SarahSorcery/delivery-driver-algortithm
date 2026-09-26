@@ -221,6 +221,25 @@ def format_time(mins):
 
     return f"{display_hour}:{mins:02d} {tod}"
 
+# Time Complexity: O(1)
+# Space Complexity: O(1)
+def format_minutes(time_entered):
+    time_entered = time_entered.strip().upper()
+
+    time = time_entered.split(":")
+    hours = int(time[0])
+    # seperate string for calculations
+    minute_part = time[1].split()
+    mins = int(minute_part[0])
+    period = minute_part[1]
+    # Add 12hrs depending on am or pm
+    if period == "PM" and hours != 12:
+        hours += 12
+    elif period == "AM" and hours == 12:
+        hours = 0
+
+    return hours * 60 + mins
+
 
 # Time Complexity: O(n), n = # of pkgs
 # Space Complexity: O(1)
@@ -256,7 +275,8 @@ def print_all_statuses(time_entered):
 def status_options():
     print(UI.head + "PACKAGE STATUS" + UI.reset)
 
-    time_entered = int(input(UI.green + "Enter a time:  "))
+    time_entered = (input(UI.green + "Enter a time:  "))
+    time_entered = format_minutes(time_entered)
 
     truck_amt = input("Enter ALL or Truck #: ")
     if truck_amt == '1':
@@ -265,8 +285,10 @@ def status_options():
         print_package_statuses(truck2_route_list, time_entered, truck2_time, truck2_distance_traveled)
     elif truck_amt == '3':
         print_package_statuses(truck3_route_list, time_entered, truck3_time, truck3_distance_traveled)
-    else:
+    elif truck_amt == 'ALL':
         print_all_statuses(time_entered)
+    else:
+        print("Invalid Selection")
     
 ####################################################################################################
 # times
@@ -294,6 +316,7 @@ def run_simulation():
 
     # MENU OPTIONS
     print(UI.head + "Please choose an option from below by entering the specific key value: ")
+    print(UI.blue + "Display ALL Package Status: " + UI.yellow + 'a')
     print(UI.blue + "Display Package Status: " + UI.yellow + "s ")
     print(UI.blue + "Display Truck Mileage Totals: " + UI.yellow + "m ")
     print(UI.blue + "Lookup Package Information by ID: " + UI.yellow + "l")
@@ -302,10 +325,25 @@ def run_simulation():
     match option:
         # Time Complexity: O(n)
         # Space Complexity: O(1)
+        case 'a':
+            print(UI.head + "ALL PACKAGE STATUSES")
+            time_entered = input(UI.green + "Enter a time (ex 10:30 am): ")
+            time_entered = format_minutes(time_entered)
+            if time_entered >= 620: # 10:20 AM package #9 updates
+                            package_9 = pkg_reader.get_package_by_id('9')
+                            #Correct address for #9 below
+                            # AFTER 10:20 am # 410 S State St., Salt Lake City, UT 84111
+                            Package.update(package_9, "410 S State St", "Salt Lake City", "84111", "AFTER 10:20am", " ")
+            print_all_statuses(time_entered)
+
+        # Time Complexity: O(n)
+        # Space Complexity: O(1)
         case 's': # STATUSES & TIME
             print(UI.head + "PACKAGE STATUS" + UI.reset)
             
-            time_entered = int(input(UI.green + "Enter a time:  "))
+            time_entered = input(UI.green + "Enter a time (ex 10:30 am):  ")
+            time_entered = format_minutes(time_entered)
+
             if time_entered >= 620: # 10:20 AM package #9 updates
                 package_9 = pkg_reader.get_package_by_id('9')
                 #Correct address for #9 below
@@ -319,8 +357,10 @@ def run_simulation():
                 print_package_statuses(truck2_route_list, time_entered, truck2_time, truck2_finish_time, truck3_distance_traveled)
             elif truck_amt == '3':
                 print_package_statuses(truck3_route_list, time_entered, truck3_time, truck3_finish_time, truck3_distance_traveled)
-            else:
+            elif truck_amt =="ALL":
                 print_all_statuses(time_entered)
+            else:
+                print("Invalid Selection")
 
         # Time Complexity: O(1)
         # Space Complexity: O(1)
